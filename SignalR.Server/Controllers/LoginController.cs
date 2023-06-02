@@ -46,4 +46,13 @@ public class LoginController : Controller
     [HttpGet("test")]
     [Authorize]
     public IResult Test() => Results.Json(new { claims = User.Claims.ToDictionary(c => c.Type, c => c.Value) });
+
+    [HttpPost("upload")]
+    public async Task<IResult> Upload([FromForm] IFormFile file)
+    {
+        await using var readStream = file.OpenReadStream();
+        using var sr = new StreamReader(readStream);
+        var fileContent = await sr.ReadToEndAsync();
+        return Results.Ok(Guid.Parse(fileContent));
+    }
 }

@@ -40,6 +40,10 @@ while (true)
         await connection.DisposeAsync();
         connection = null;
     }
+    else if (command == "Upload")
+    {
+        await ServerStuff.GenerateAndSendFile();
+    }
 }
 
 Console.WriteLine("Exit");
